@@ -23,6 +23,7 @@ import {
   ArrowUp,
   X,
   Loader2,
+  Menu,
 } from "lucide-react";
 import confetti from "canvas-confetti";
 import { db, collection, addDoc, serverTimestamp, OperationType, handleFirestoreError, testConnection } from "./lib/firebase";
@@ -94,6 +95,7 @@ export default function App() {
   const REGISTRATION_LINK = "https://forms.gle/Dry6d51EJSChZA6d8";
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -184,51 +186,94 @@ export default function App() {
   return (
     <div className="min-h-screen overflow-x-hidden selection:bg-brand-pink selection:text-white">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-transparent backdrop-blur-2xl z-50 border-white/5">
+      <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-2xl z-50 border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-24">
+          <div className="flex justify-between items-center h-20 md:h-24">
             <div className="flex items-center gap-2">
               <a href="/" className="transition-transform hover:scale-105 active:scale-95">
-                <img src="https://kidsexpo.mn/wp-content/uploads/2026/03/untitled-1.png?w=1024" alt="Kids Expo 2026" className="h-16 object-contain" />
+                <img src="https://kidsexpo.mn/wp-content/uploads/2026/03/untitled-1.png?w=1024" alt="Kids Expo 2026" className="h-12 md:h-16 object-contain" />
               </a>
             </div>
-            <div className="hidden md:flex space-x-10">
-              <a
-                href="/"
-                className="text-brand-dark hover:text-brand-pink font-extrabold text-lg transition-colors drop-shadow-sm"
-              >
-                Нүүр
-              </a>
-              <a
-                href="#about"
-                className="text-brand-dark hover:text-brand-pink font-extrabold text-lg transition-colors drop-shadow-sm"
-              >
-                Тухай
-              </a>
-              <a
-                href="#participants"
-                className="text-brand-dark hover:text-brand-pink font-extrabold text-lg transition-colors drop-shadow-sm"
-              >
-                Оролцогчид
-              </a>
-              <a
-                href="#footer"
-                className="text-brand-dark hover:text-brand-pink font-extrabold text-lg transition-colors drop-shadow-sm"
-              >
-                Холбоо барих
-              </a>
+            
+            {/* Desktop Menu */}
+            <div className="hidden md:flex space-x-8 lg:space-x-10">
+              <a href="/" className="text-brand-dark hover:text-brand-pink font-extrabold text-lg transition-colors">Нүүр</a>
+              <a href="#about" className="text-brand-dark hover:text-brand-pink font-extrabold text-lg transition-colors">Тухай</a>
+              <a href="#participants" className="text-brand-dark hover:text-brand-pink font-extrabold text-lg transition-colors">Оролцогчид</a>
+              <a href="#footer" className="text-brand-dark hover:text-brand-pink font-extrabold text-lg transition-colors">Холбоо барих</a>
             </div>
-            <div>
-              <button
-                onClick={() => setIsModalOpen(true)}
-                className="bg-brand-blue hover:bg-brand-blue/90 text-white px-6 py-2.5 rounded-full font-bold transition-all hover:shadow-lg hover:shadow-brand-blue/30 active:scale-95 inline-flex items-center gap-2 cursor-pointer"
+
+            {/* Desktop Button / Mobile Menu Toggle */}
+            <div className="flex items-center gap-4">
+              <div className="hidden md:block">
+                <button
+                  onClick={() => setIsModalOpen(true)}
+                  className="bg-brand-blue hover:bg-brand-blue/90 text-white px-6 py-2.5 rounded-full font-bold transition-all hover:shadow-lg hover:shadow-brand-blue/30 active:scale-95 inline-flex items-center gap-2 cursor-pointer"
+                >
+                  Бүртгүүлэх
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+
+              {/* Mobile Menu Button */}
+              <button 
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="md:hidden p-2 text-brand-dark hover:bg-gray-100 rounded-xl transition-colors"
+                aria-label="Toggle menu"
               >
-                Бүртгүүлэх
-                <ArrowRight className="w-4 h-4" />
+                {isMenuOpen ? <X className="w-7 h-7" /> : <Menu className="w-7 h-7" />}
               </button>
             </div>
           </div>
         </div>
+
+        {/* Mobile Sidebar */}
+        <AnimatePresence>
+          {isMenuOpen && (
+            <>
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                onClick={() => setIsMenuOpen(false)}
+                className="fixed inset-0 bg-brand-dark/20 backdrop-blur-sm z-[55] md:hidden"
+              />
+              <motion.div
+                initial={{ x: "100%" }}
+                animate={{ x: 0 }}
+                exit={{ x: "100%" }}
+                transition={{ type: "spring", damping: 25, stiffness: 200 }}
+                className="fixed top-0 right-0 bottom-0 w-[280px] bg-white z-[60] shadow-2xl md:hidden p-6 flex flex-col"
+              >
+                <div className="flex justify-between items-center mb-10">
+                  <span className="font-black text-2xl text-brand-dark">MENU</span>
+                  <button onClick={() => setIsMenuOpen(false)} className="p-2 hover:bg-gray-100 rounded-full">
+                    <X className="w-6 h-6" />
+                  </button>
+                </div>
+
+                <div className="flex flex-col space-y-6">
+                  <a href="/" onClick={() => setIsMenuOpen(false)} className="text-2xl font-black text-brand-dark hover:text-brand-pink transition-colors">Нүүр</a>
+                  <a href="#about" onClick={() => setIsMenuOpen(false)} className="text-2xl font-black text-brand-dark hover:text-brand-pink transition-colors">Тухай</a>
+                  <a href="#participants" onClick={() => setIsMenuOpen(false)} className="text-2xl font-black text-brand-dark hover:text-brand-pink transition-colors">Оролцогчид</a>
+                  <a href="#footer" onClick={() => setIsMenuOpen(false)} className="text-2xl font-black text-brand-dark hover:text-brand-pink transition-colors">Холбоо барих</a>
+                </div>
+
+                <div className="mt-auto">
+                  <button
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      setIsModalOpen(true);
+                    }}
+                    className="w-full bg-brand-blue text-white py-4 rounded-2xl font-black text-xl shadow-lg shadow-brand-blue/20"
+                  >
+                    Бүртгүүлэх
+                  </button>
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
       </nav>
 
       {/* Hero Section */}
@@ -858,7 +903,7 @@ export default function App() {
             <div className="w-24 h-2 bg-brand-yellow mx-auto rounded-full" />
           </div>
           
-          <div className="flex flex-wrap justify-center gap-4 md:gap-6">
+          <div className="flex flex-wrap justify-center gap-2 md:gap-6">
             {shuffledParticipants.map((name, index) => {
               const colorClass = balloonColors[index % balloonColors.length];
               
@@ -867,7 +912,7 @@ export default function App() {
                   key={index}
                   initial={{ opacity: 0, scale: 0.8, y: 0 }}
                   whileInView={{ 
-                    opacity: 0.4, 
+                    opacity: 0.6, 
                     scale: 1,
                     y: [0, -10, 0]
                   }}
@@ -889,10 +934,10 @@ export default function App() {
                     rotate: [-1, 1, -1],
                     transition: { duration: 0.2, y: { duration: 0.2 } }
                   }}
-                  className={`px-6 py-4 rounded-[2rem] shadow-lg font-bold text-center text-sm md:text-base cursor-default ${colorClass} transition-all duration-300 hover:shadow-2xl border-b-4 max-w-xs relative overflow-hidden flex items-center justify-center min-h-[60px]`}
+                  className={`px-3 py-2 md:px-6 md:py-4 rounded-[1rem] md:rounded-[2rem] shadow-md md:shadow-lg font-bold text-center text-[10px] sm:text-xs md:text-base cursor-default ${colorClass} transition-all duration-300 hover:shadow-xl border-b-2 md:border-b-4 flex-1 min-w-[80px] sm:min-w-[120px] md:max-w-xs relative overflow-hidden flex items-center justify-center min-h-[40px] md:min-h-[60px]`}
                 >
                   {/* Subtle balloon shine effect */}
-                  <div className="absolute top-1 left-3 w-4 h-2 bg-white/30 rounded-full blur-[1px]"></div>
+                  <div className="absolute top-0.5 left-1.5 md:top-1 md:left-3 w-2 md:w-4 h-1 md:h-2 bg-white/30 rounded-full blur-[1px]"></div>
                   <span className="break-words line-clamp-2 relative z-10">{name}</span>
                 </motion.div>
               );
@@ -1048,11 +1093,11 @@ export default function App() {
         {showScrollTop && (
           <motion.button
             initial={{ opacity: 0, y: 20, scale: 0.8 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
+            animate={{ opacity: 0.5, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.8 }}
             onClick={scrollToTop}
-            className="fixed bottom-8 right-8 z-[60] bg-brand-pink text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center hover:bg-brand-blue transition-colors focus:outline-none group"
-            whileHover={{ y: -5 }}
+            className="fixed bottom-8 right-8 z-[60] bg-brand-pink text-white w-14 h-14 rounded-full shadow-2xl flex items-center justify-center hover:bg-brand-blue transition-all focus:outline-none group"
+            whileHover={{ opacity: 1, y: -5 }}
             whileTap={{ scale: 0.9 }}
           >
             <ArrowUp className="w-7 h-7 group-hover:animate-bounce" />
