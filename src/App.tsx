@@ -324,12 +324,12 @@ export default function App() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6 }}
           >
-            <div className="flex items-center justify-center gap-2 bg-white px-6 py-4 rounded-2xl shadow-sm border border-gray-100 font-bold text-brand-dark">
-              <CalendarDays className="text-brand-pink w-6 h-6" />
+            <div className="flex items-center justify-center gap-2 bg-brand-yellow px-6 py-4 rounded-2xl shadow-md border border-brand-yellow/20 font-bold text-brand-dark">
+              <CalendarDays className="text-brand-dark w-6 h-6" />
               2026.05.29 - 06.01
             </div>
-            <div className="flex items-center justify-center gap-2 bg-white px-6 py-4 rounded-2xl shadow-sm border border-gray-100 font-bold text-brand-dark text-center md:text-left">
-              <MapPin className="text-brand-blue w-6 h-6 shrink-0" />
+            <div className="flex items-center justify-center gap-2 bg-brand-green px-6 py-4 rounded-2xl shadow-md border border-brand-green/20 font-bold text-white text-center md:text-left">
+              <MapPin className="text-white w-6 h-6 shrink-0" />
               <span>Төв цэнгэлдэх хүрээлэн, Сурын талбай, Шагайн асар</span>
             </div>
           </motion.div>
