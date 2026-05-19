@@ -1,0 +1,6 @@
+{
+  "name": "Kids Expo 2026 Mongolia",
+  "description": "KIDS EXPO 2026 үзэсгэлэн яармагийн албан ёсны вэбсайт",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
