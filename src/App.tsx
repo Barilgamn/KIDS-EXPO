@@ -21,7 +21,11 @@ import {
   Mail,
   Facebook,
   ArrowUp,
+  X,
+  Loader2,
 } from "lucide-react";
+import confetti from "canvas-confetti";
+import { db, collection, addDoc, serverTimestamp, OperationType, handleFirestoreError, testConnection } from "./lib/firebase";
 
 const participants = [
   "Friut house",
@@ -80,11 +84,57 @@ const participants = [
 ];
 
 export default function App() {
+  useEffect(() => {
+    testConnection();
+  }, []);
+
   const videoContainerRef = useRef(null);
   const isVideoInView = useInView(videoContainerRef, { amount: 0.5, once: true });
 
   const REGISTRATION_LINK = "https://forms.gle/Dry6d51EJSChZA6d8";
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    type: "visitor",
+    message: "",
+  });
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setError(null);
+
+    try {
+      await addDoc(collection(db, "registrations"), {
+        ...formData,
+        createdAt: serverTimestamp(),
+      });
+      setIsSubmitted(true);
+      confetti({
+        particleCount: 150,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ["#FF3366", "#FFD700", "#00DF9A", "#007AFF"],
+      });
+      setTimeout(() => {
+        setIsModalOpen(false);
+        setIsSubmitted(false);
+        setFormData({ name: "", email: "", phone: "", type: "visitor", message: "" });
+      }, 3000);
+    } catch (err) {
+      handleFirestoreError(err, OperationType.CREATE, "registrations");
+      setError("Бүртгэл амжилтгүй боллоо. Дахин оролдоно уу.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -169,15 +219,13 @@ export default function App() {
               </a>
             </div>
             <div>
-              <a
-                href={REGISTRATION_LINK}
-                target="_blank"
-                rel="noreferrer"
-                className="bg-brand-blue hover:bg-brand-blue/90 text-white px-6 py-2.5 rounded-full font-bold transition-all hover:shadow-lg hover:shadow-brand-blue/30 active:scale-95 inline-flex items-center gap-2"
+              <button
+                onClick={() => setIsModalOpen(true)}
+                className="bg-brand-blue hover:bg-brand-blue/90 text-white px-6 py-2.5 rounded-full font-bold transition-all hover:shadow-lg hover:shadow-brand-blue/30 active:scale-95 inline-flex items-center gap-2 cursor-pointer"
               >
                 Бүртгүүлэх
                 <ArrowRight className="w-4 h-4" />
-              </a>
+              </button>
             </div>
           </div>
         </div>
@@ -888,17 +936,15 @@ export default function App() {
             Хүүхдийн боловсрол, хөгжил, бүтээлч байдал болон гэр бүлийн сайн
             сайхны төлөөх санал санаачилгыг дэмжинэ.
           </p>
-          <motion.a
-            href={REGISTRATION_LINK}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-3 bg-brand-dark text-white px-10 py-5 rounded-full font-black text-xl hover:bg-brand-pink transition-colors shadow-2xl hover:shadow-brand-pink/50 active:scale-95"
+          <motion.button
+            onClick={() => setIsModalOpen(true)}
+            className="inline-flex items-center gap-3 bg-brand-dark text-white px-10 py-5 rounded-full font-black text-xl hover:bg-brand-pink transition-colors shadow-2xl hover:shadow-brand-pink/50 active:scale-95 cursor-pointer"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             Үзэсгэлэнд бүртгүүлэх
             <ArrowRight className="w-6 h-6" />
-          </motion.a>
+          </motion.button>
         </div>
       </section>
 
@@ -1011,6 +1057,176 @@ export default function App() {
           >
             <ArrowUp className="w-7 h-7 group-hover:animate-bounce" />
           </motion.button>
+        )}
+      </AnimatePresence>
+
+      {/* Registration Modal */}
+      <AnimatePresence>
+        {isModalOpen && (
+          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setIsModalOpen(false)}
+              className="absolute inset-0 bg-brand-dark/60 backdrop-blur-sm"
+            />
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              className="relative w-full max-w-lg bg-white rounded-[2.5rem] shadow-2xl overflow-hidden"
+            >
+              <div className="relative p-8 sm:p-10">
+                <button
+                  onClick={() => setIsModalOpen(false)}
+                  className="absolute top-6 right-6 p-2 rounded-full hover:bg-gray-100 transition-colors"
+                >
+                  <X className="w-6 h-6 text-gray-400" />
+                </button>
+
+                <div className="mb-8">
+                  <h2 className="text-3xl font-black text-brand-dark mb-2">Хамтдаа хөгжицгөөе!</h2>
+                  <p className="text-gray-500 font-medium">KIDS EXPO 2026-д бүртгүүлэх</p>
+                </div>
+
+                {isSubmitted ? (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="py-16 flex flex-col items-center text-center"
+                  >
+                    <div className="relative mb-8">
+                      <motion.div
+                        initial={{ scale: 0 }}
+                        animate={{ scale: 1 }}
+                        transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
+                        className="w-24 h-24 bg-brand-green/20 rounded-full flex items-center justify-center"
+                      >
+                        <Check className="w-12 h-12 text-brand-green" />
+                      </motion.div>
+                      <motion.div
+                        animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0, 0.3] }}
+                        transition={{ repeat: Infinity, duration: 2 }}
+                        className="absolute inset-0 bg-brand-green/10 rounded-full"
+                      />
+                    </div>
+                    <h3 className="text-3xl font-black text-brand-dark mb-4">Бүртгэл амжилттай!</h3>
+                    <div className="space-y-2">
+                      <p className="text-gray-500 font-bold text-lg">Таны хүсэлтийг хүлээн авлаа.</p>
+                      <p className="text-gray-400 font-medium">Бид удахгүй тантай холбогдох болно.</p>
+                    </div>
+                    <motion.button
+                      initial={{ opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.8 }}
+                      onClick={() => setIsModalOpen(false)}
+                      className="mt-10 text-brand-blue font-bold hover:underline"
+                    >
+                      Хаах
+                    </motion.button>
+                  </motion.div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-5">
+                    <div className="space-y-2">
+                      <label className="text-sm font-black text-brand-dark uppercase tracking-wider px-1">Таны нэр</label>
+                      <input
+                        required
+                        type="text"
+                        value={formData.name}
+                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                        className="w-full px-6 py-4 bg-gray-50 border-2 border-gray-100 rounded-2xl focus:border-brand-blue focus:ring-0 transition-colors font-medium outline-none"
+                        placeholder="Нэрээ оруулна уу"
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <div className="space-y-2">
+                        <label className="text-sm font-black text-brand-dark uppercase tracking-wider px-1">И-мэйл</label>
+                        <input
+                          required
+                          type="email"
+                          value={formData.email}
+                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                          className="w-full px-6 py-4 bg-gray-50 border-2 border-gray-100 rounded-2xl focus:border-brand-blue focus:ring-0 transition-colors font-medium outline-none"
+                          placeholder="Email"
+                        />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-sm font-black text-brand-dark uppercase tracking-wider px-1">Утас</label>
+                        <input
+                          required
+                          type="tel"
+                          value={formData.phone}
+                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                          className="w-full px-6 py-4 bg-gray-50 border-2 border-gray-100 rounded-2xl focus:border-brand-blue focus:ring-0 transition-colors font-medium outline-none"
+                          placeholder="Утасны дугаар"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-black text-brand-dark uppercase tracking-wider px-1">Бүртгэлийн төрөл</label>
+                      <div className="grid grid-cols-2 gap-4">
+                        <button
+                          type="button"
+                          onClick={() => setFormData({ ...formData, type: "visitor" })}
+                          className={`py-4 rounded-2xl font-bold transition-all border-2 ${
+                            formData.type === "visitor"
+                              ? "bg-brand-blue border-brand-blue text-white shadow-lg shadow-brand-blue/30"
+                              : "bg-gray-50 border-gray-100 text-gray-500 hover:border-brand-blue/30"
+                          }`}
+                        >
+                          Үзэгч
+                        </button>
+                        <button
+                          type="button"
+                          onClick={() => setFormData({ ...formData, type: "exhibitor" })}
+                          className={`py-4 rounded-2xl font-bold transition-all border-2 ${
+                            formData.type === "exhibitor"
+                              ? "bg-brand-pink border-brand-pink text-white shadow-lg shadow-brand-pink/30"
+                              : "bg-gray-50 border-gray-100 text-gray-500 hover:border-brand-pink/30"
+                          }`}
+                        >
+                          Оролцогч
+                        </button>
+                      </div>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-sm font-black text-brand-dark uppercase tracking-wider px-1">Мессеж (Сонголттой)</label>
+                      <textarea
+                        rows={3}
+                        value={formData.message}
+                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                        className="w-full px-6 py-4 bg-gray-50 border-2 border-gray-100 rounded-2xl focus:border-brand-blue focus:ring-0 transition-colors font-medium outline-none resize-none"
+                        placeholder="Таны асуулт эсвэл санал..."
+                      />
+                    </div>
+
+                    {error && (
+                      <p className="text-red-500 text-sm font-bold text-center">{error}</p>
+                    )}
+
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full bg-brand-dark hover:bg-black text-white py-5 rounded-2xl font-black text-lg transition-all hover:shadow-xl active:scale-95 disabled:opacity-50 disabled:active:scale-100 flex items-center justify-center gap-3"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="w-5 h-5 animate-spin" />
+                          Илгээж байна...
+                        </>
+                      ) : (
+                        "Бүртгүүлэх"
+                      )}
+                    </button>
+                  </form>
+                )}
+              </div>
+            </motion.div>
+          </div>
         )}
       </AnimatePresence>
     </div>

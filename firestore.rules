@@ -1,0 +1,50 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // 1. Global Safety Net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Phase 3: Primitive Definition
+    function isValidId(id) { 
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); 
+    }
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+    function isSignedIn() { return request.auth != null; }
+    
+    // Admin check - Using the user's email from metadata
+    function isAdmin() { 
+      return isSignedIn() && request.auth.token.email == 'info@barilga.mn' && request.auth.token.email_verified == true;
+    }
+
+    // 2. Validation Blueprints
+    function isValidRegistration(data) {
+      return data.keys().hasAll(['name', 'email', 'phone', 'type', 'createdAt']) &&
+             data.keys().size() >= 5 && data.keys().size() <= 6 &&
+             data.name is string && data.name.size() >= 2 && data.name.size() <= 200 &&
+             data.email is string && data.email.size() >= 5 && data.email.size() <= 200 &&
+             data.phone is string && data.phone.size() >= 8 && data.phone.size() <= 20 &&
+             data.type in ['exhibitor', 'visitor'] &&
+             data.createdAt == request.time &&
+             (!('message' in data) || (data.message is string && data.message.size() <= 1000));
+    }
+
+    match /registrations/{regId} {
+      // Anyone can submit a registration
+      allow create: if isValidRegistration(incoming());
+      
+      // Only admins can see registrations
+      allow get, list: if isAdmin();
+      
+      // No updates or deletes allowed through the client for now
+      allow update, delete: if isAdmin();
+    }
+    
+    // Connection test path
+    match /test/connection {
+      allow get: if true;
+    }
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "entities": {
+    "Registration": {
+      "title": "Registration",
+      "description": "Exhibitor or visitor registration record",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string", "description": "Full name or organization name" },
+        "email": { "type": "string", "description": "Contact email" },
+        "phone": { "type": "string", "description": "Contact phone number" },
+        "type": { "type": "string", "enum": ["exhibitor", "visitor"], "description": "Type of registration" },
+        "message": { "type": "string", "description": "Optional message or inquiry" },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Timestamp of registration" }
+      },
+      "required": ["name", "email", "phone", "type", "createdAt"]
+    }
+  },
+  "firestore": {
+    "registrations": {
+      "schema": "Registration",
+      "description": "Collection of registrations for the expo"
+    }
+  }
+}
