@@ -1156,19 +1156,19 @@ export default function App() {
               initial={{ opacity: 0, scale: 0.9, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.9, y: 20 }}
-              className="relative w-full max-w-lg bg-white rounded-[2.5rem] shadow-2xl overflow-hidden"
+              className="relative w-full max-w-lg bg-white rounded-[1.5rem] md:rounded-[2.5rem] shadow-2xl overflow-hidden max-h-[90vh] flex flex-col"
             >
-              <div className="relative p-8 sm:p-10">
+              <div className="relative p-6 sm:p-10 overflow-y-auto custom-scrollbar">
                 <button
                   onClick={() => setIsModalOpen(false)}
-                  className="absolute top-6 right-6 p-2 rounded-full hover:bg-gray-100 transition-colors"
+                  className="absolute top-4 right-4 sm:top-6 sm:right-6 p-2 rounded-full hover:bg-gray-100 transition-colors z-10 bg-white/80 backdrop-blur-sm"
                 >
-                  <X className="w-6 h-6 text-gray-400" />
+                  <X className="w-5 h-5 sm:w-6 sm:h-6 text-gray-400" />
                 </button>
 
-                <div className="mb-8">
-                  <h2 className="text-3xl font-black text-brand-dark mb-2">Хамтдаа хөгжицгөөе!</h2>
-                  <p className="text-gray-500 font-medium">KIDS EXPO 2026-д бүртгүүлэх</p>
+                <div className="mb-6 sm:mb-8">
+                  <h2 className="text-2xl sm:text-3xl font-black text-brand-dark mb-1 sm:mb-2">Хамтдаа хөгжицгөөе!</h2>
+                  <p className="text-sm sm:text-base text-gray-500 font-medium">KIDS EXPO 2026-д бүртгүүлэх</p>
                 </div>
 
                 {isSubmitted ? (
@@ -1216,7 +1216,7 @@ export default function App() {
                         type="text"
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className="w-full px-6 py-4 bg-gray-50 border-2 border-gray-100 rounded-2xl focus:border-brand-blue focus:ring-0 transition-colors font-medium outline-none"
+                        className="w-full px-4 py-3 sm:px-6 sm:py-4 bg-gray-50 border-2 border-gray-100 rounded-xl sm:rounded-2xl focus:border-brand-blue focus:ring-0 transition-colors font-medium outline-none"
                         placeholder="Нэрээ оруулна уу"
                       />
                     </div>
@@ -1229,7 +1229,7 @@ export default function App() {
                           type="email"
                           value={formData.email}
                           onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                          className="w-full px-6 py-4 bg-gray-50 border-2 border-gray-100 rounded-2xl focus:border-brand-blue focus:ring-0 transition-colors font-medium outline-none"
+                          className="w-full px-4 py-3 sm:px-6 sm:py-4 bg-gray-50 border-2 border-gray-100 rounded-xl sm:rounded-2xl focus:border-brand-blue focus:ring-0 transition-colors font-medium outline-none"
                           placeholder="Email"
                         />
                       </div>
@@ -1240,7 +1240,7 @@ export default function App() {
                           type="tel"
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          className="w-full px-6 py-4 bg-gray-50 border-2 border-gray-100 rounded-2xl focus:border-brand-blue focus:ring-0 transition-colors font-medium outline-none"
+                          className="w-full px-4 py-3 sm:px-6 sm:py-4 bg-gray-50 border-2 border-gray-100 rounded-xl sm:rounded-2xl focus:border-brand-blue focus:ring-0 transition-colors font-medium outline-none"
                           placeholder="Утасны дугаар"
                         />
                       </div>
@@ -1252,7 +1252,7 @@ export default function App() {
                         <button
                           type="button"
                           onClick={() => setFormData({ ...formData, type: "visitor" })}
-                          className={`py-4 rounded-2xl font-bold transition-all border-2 ${
+                          className={`py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold transition-all border-2 ${
                             formData.type === "visitor"
                               ? "bg-brand-blue border-brand-blue text-white shadow-lg shadow-brand-blue/30"
                               : "bg-gray-50 border-gray-100 text-gray-500 hover:border-brand-blue/30"
@@ -1263,7 +1263,7 @@ export default function App() {
                         <button
                           type="button"
                           onClick={() => setFormData({ ...formData, type: "exhibitor" })}
-                          className={`py-4 rounded-2xl font-bold transition-all border-2 ${
+                          className={`py-3 sm:py-4 rounded-xl sm:rounded-2xl font-bold transition-all border-2 ${
                             formData.type === "exhibitor"
                               ? "bg-brand-pink border-brand-pink text-white shadow-lg shadow-brand-pink/30"
                               : "bg-gray-50 border-gray-100 text-gray-500 hover:border-brand-pink/30"
@@ -1280,7 +1280,7 @@ export default function App() {
                         rows={3}
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                        className="w-full px-6 py-4 bg-gray-50 border-2 border-gray-100 rounded-2xl focus:border-brand-blue focus:ring-0 transition-colors font-medium outline-none resize-none"
+                        className="w-full px-4 py-3 sm:px-6 sm:py-4 bg-gray-50 border-2 border-gray-100 rounded-xl sm:rounded-2xl focus:border-brand-blue focus:ring-0 transition-colors font-medium outline-none resize-none"
                         placeholder="Таны асуулт эсвэл санал..."
                       />
                     </div>
