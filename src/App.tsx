@@ -243,20 +243,20 @@ export default function App() {
                 animate={{ x: 0 }}
                 exit={{ x: "100%" }}
                 transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                className="fixed top-0 right-0 bottom-0 w-[280px] bg-white z-[60] shadow-2xl md:hidden p-6 flex flex-col"
+                className="fixed top-0 right-0 bottom-0 w-[260px] bg-white z-[60] shadow-[0_0_40px_rgba(0,0,0,0.1)] md:hidden p-6 flex flex-col"
               >
-                <div className="flex justify-between items-center mb-10">
-                  <span className="font-black text-2xl text-brand-dark">MENU</span>
+                <div className="flex justify-between items-center mb-8">
+                  <span className="font-black text-xl text-brand-dark">MENU</span>
                   <button onClick={() => setIsMenuOpen(false)} className="p-2 hover:bg-gray-100 rounded-full">
                     <X className="w-6 h-6" />
                   </button>
                 </div>
 
-                <div className="flex flex-col space-y-6">
-                  <a href="/" onClick={() => setIsMenuOpen(false)} className="text-2xl font-black text-brand-dark hover:text-brand-pink transition-colors">Нүүр</a>
-                  <a href="#about" onClick={() => setIsMenuOpen(false)} className="text-2xl font-black text-brand-dark hover:text-brand-pink transition-colors">Тухай</a>
-                  <a href="#participants" onClick={() => setIsMenuOpen(false)} className="text-2xl font-black text-brand-dark hover:text-brand-pink transition-colors">Оролцогчид</a>
-                  <a href="#footer" onClick={() => setIsMenuOpen(false)} className="text-2xl font-black text-brand-dark hover:text-brand-pink transition-colors">Холбоо барих</a>
+                <div className="flex flex-col space-y-3">
+                  <a href="/" onClick={() => setIsMenuOpen(false)} className="text-lg font-bold text-brand-dark bg-gray-50 px-4 py-3 rounded-xl hover:bg-brand-pink hover:text-white transition-colors">Нүүр</a>
+                  <a href="#about" onClick={() => setIsMenuOpen(false)} className="text-lg font-bold text-brand-dark bg-gray-50 px-4 py-3 rounded-xl hover:bg-brand-pink hover:text-white transition-colors">Тухай</a>
+                  <a href="#participants" onClick={() => setIsMenuOpen(false)} className="text-lg font-bold text-brand-dark bg-gray-50 px-4 py-3 rounded-xl hover:bg-brand-pink hover:text-white transition-colors">Оролцогчид</a>
+                  <a href="#footer" onClick={() => setIsMenuOpen(false)} className="text-lg font-bold text-brand-dark bg-gray-50 px-4 py-3 rounded-xl hover:bg-brand-pink hover:text-white transition-colors">Холбоо барих</a>
                 </div>
 
                 <div className="mt-auto">
@@ -289,15 +289,15 @@ export default function App() {
         <motion.img
           src="https://i0.wp.com/kidsexpo.mn/wp-content/uploads/2026/03/Character-01-1.png?w=1959&ssl=1"
           alt="Heart Character"
-          className="hidden md:block absolute top-40 left-[5%] w-32 lg:w-40 h-auto z-10"
-          animate={{ y: [0, -20, 0] }}
+          className="absolute top-24 left-[2%] w-16 md:top-40 md:left-[5%] md:w-32 lg:w-40 h-auto z-10"
+          animate={{ y: [0, -10, 0] }}
           transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
         />
         <motion.img
           src="https://i0.wp.com/kidsexpo.mn/wp-content/uploads/2026/03/Character-02-1.png?w=1979&ssl=1"
           alt="Cloud Character"
-          className="hidden md:block absolute top-32 right-[12%] w-36 lg:w-48 h-auto z-10"
-          animate={{ y: [0, -25, 0] }}
+          className="absolute top-24 right-[5%] w-20 md:top-32 md:right-[12%] md:w-36 lg:w-48 h-auto z-10"
+          animate={{ y: [0, -15, 0] }}
           transition={{
             repeat: Infinity,
             duration: 5,
@@ -308,8 +308,8 @@ export default function App() {
         <motion.img
           src="https://i0.wp.com/kidsexpo.mn/wp-content/uploads/2026/03/Character-03-1.png?w=2003&ssl=1"
           alt="Star Character"
-          className="hidden md:block absolute bottom-4 left-[2%] w-32 lg:w-44 h-auto z-10"
-          animate={{ y: [0, -15, 0] }}
+          className="absolute bottom-10 left-[2%] w-16 md:bottom-4 md:left-[2%] md:w-32 lg:w-44 h-auto z-10"
+          animate={{ y: [0, -10, 0] }}
           transition={{
             repeat: Infinity,
             duration: 3.5,
@@ -320,8 +320,8 @@ export default function App() {
         <motion.img
           src="https://i0.wp.com/kidsexpo.mn/wp-content/uploads/2026/03/Character-04-1.png?w=1923&ssl=1"
           alt="Green Ball Character"
-          className="hidden md:block absolute bottom-12 right-[2%] w-28 lg:w-36 h-auto z-10"
-          animate={{ y: [0, -30, 0] }}
+          className="absolute bottom-20 right-[2%] w-14 md:bottom-12 md:right-[2%] md:w-28 lg:w-36 h-auto z-10"
+          animate={{ y: [0, -15, 0] }}
           transition={{
             repeat: Infinity,
             duration: 4.5,
