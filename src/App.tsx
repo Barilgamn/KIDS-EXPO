@@ -84,6 +84,23 @@ const participants = [
   "DEMON HUNTRIX POP UP STORE"
 ];
 
+const KidsExpoLogo = ({ className = "" }: { className?: string }) => (
+  <div className={`flex flex-col items-center justify-center select-none ${className}`}>
+    <div className="flex items-center -mb-2">
+      <span className="text-[#FBCB13] font-black text-[32px] md:text-[44px] leading-none tracking-tighter" style={{ textShadow: '2px 2px 0px rgba(0,0,0,0.05)' }}>K</span>
+      <img src="https://i0.wp.com/kidsexpo.mn/wp-content/uploads/2026/03/Character-01-1.png?w=1959&ssl=1" alt="Heart" className="h-[36px] md:h-[50px] object-contain mx-[-2px] md:mx-[-4px] z-10" />
+      <span className="text-[#089E46] font-black text-[32px] md:text-[44px] leading-none tracking-tighter" style={{ textShadow: '2px 2px 0px rgba(0,0,0,0.05)' }}>D</span>
+      <span className="text-[#F2539D] font-black text-[32px] md:text-[44px] leading-none tracking-tighter" style={{ textShadow: '2px 2px 0px rgba(0,0,0,0.05)' }}>S</span>
+    </div>
+    <div className="flex items-center gap-1 md:gap-[5px]">
+      <div className="bg-[#E23D28] text-white font-black text-[22px] md:text-[30px] w-[26px] h-[26px] md:w-[36px] md:h-[36px] flex items-center justify-center transform -rotate-[4deg] rounded md:rounded-md shadow-sm border border-[#c1301c]">E</div>
+      <div className="bg-[#F19B1A] text-white font-black text-[22px] md:text-[30px] w-[26px] h-[26px] md:w-[36px] md:h-[36px] flex items-center justify-center transform rotate-[2deg] rounded md:rounded-md shadow-sm border border-[#d68713]">X</div>
+      <div className="bg-[#2A5BAE] text-white font-black text-[22px] md:text-[30px] w-[26px] h-[26px] md:w-[36px] md:h-[36px] flex items-center justify-center transform rotate-[4deg] rounded md:rounded-md shadow-sm border border-[#1f488f]">P</div>
+      <div className="bg-[#A7D13E] text-white font-black text-[22px] md:text-[30px] w-[26px] h-[26px] md:w-[36px] md:h-[36px] flex items-center justify-center transform rotate-[-2deg] rounded md:rounded-md shadow-sm border border-[#8caf2f]">O</div>
+    </div>
+  </div>
+);
+
 export default function App() {
   useEffect(() => {
     testConnection();
@@ -190,8 +207,8 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20 md:h-24">
             <div className="flex items-center gap-2">
-              <a href="/" className="transition-transform hover:scale-105 active:scale-95">
-                <img src="https://kidsexpo.mn/wp-content/uploads/2026/03/untitled-1.png?w=1024" alt="Kids Expo 2026" className="h-12 md:h-16 object-contain" />
+              <a href="/" className="transition-transform hover:scale-105 active:scale-95 py-2">
+                <KidsExpoLogo className="scale-90 md:scale-100 origin-left" />
               </a>
             </div>
             
@@ -1005,7 +1022,7 @@ export default function App() {
             {/* Split Left Side */}
             <div>
               <div className="flex items-center gap-2 mb-8 pt-2">
-                <img src="https://kidsexpo.mn/wp-content/uploads/2026/03/untitled-1.png?w=1024" alt="Kids Expo 2026" className="h-16 object-contain rounded-md bg-white p-2" />
+                <KidsExpoLogo className="scale-100 origin-left drop-shadow-xl" />
               </div>
               <p className="text-white/60 font-medium max-w-md text-lg leading-relaxed mb-10">
                 Play • Create • Discover Fun • Together. Хүүхдийн инээд хөөрөөр
