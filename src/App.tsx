@@ -227,7 +227,7 @@ export default function App() {
           </div>
         </div>
 
-        {/* Mobile Sidebar */}
+        {/* Mobile Sidebar (Floating Dropdown) */}
         <AnimatePresence>
           {isMenuOpen && (
             <>
@@ -239,33 +239,33 @@ export default function App() {
                 className="fixed inset-0 bg-brand-dark/20 backdrop-blur-sm z-[55] md:hidden"
               />
               <motion.div
-                initial={{ x: "100%" }}
-                animate={{ x: 0 }}
-                exit={{ x: "100%" }}
+                initial={{ opacity: 0, scale: 0.95, y: -10 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95, y: -10 }}
                 transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                className="fixed top-0 right-0 bottom-0 w-[260px] bg-white z-[60] shadow-[0_0_40px_rgba(0,0,0,0.1)] md:hidden p-6 flex flex-col"
+                className="absolute top-[80px] left-4 right-4 bg-white z-[60] shadow-2xl md:hidden p-5 flex flex-col rounded-[24px]"
               >
-                <div className="flex justify-between items-center mb-8">
-                  <span className="font-black text-xl text-brand-dark">MENU</span>
+                <div className="flex justify-between items-center mb-4 px-2">
+                  <span className="font-bold text-lg text-brand-dark">MENU</span>
                   <button onClick={() => setIsMenuOpen(false)} className="p-2 hover:bg-gray-100 rounded-full">
-                    <X className="w-6 h-6" />
+                    <X className="w-5 h-5 text-brand-dark" />
                   </button>
                 </div>
 
-                <div className="flex flex-col space-y-3">
-                  <a href="/" onClick={() => setIsMenuOpen(false)} className="text-lg font-bold text-brand-dark bg-gray-50 px-4 py-3 rounded-xl hover:bg-brand-pink hover:text-white transition-colors">Нүүр</a>
-                  <a href="#about" onClick={() => setIsMenuOpen(false)} className="text-lg font-bold text-brand-dark bg-gray-50 px-4 py-3 rounded-xl hover:bg-brand-pink hover:text-white transition-colors">Тухай</a>
-                  <a href="#participants" onClick={() => setIsMenuOpen(false)} className="text-lg font-bold text-brand-dark bg-gray-50 px-4 py-3 rounded-xl hover:bg-brand-pink hover:text-white transition-colors">Оролцогчид</a>
-                  <a href="#footer" onClick={() => setIsMenuOpen(false)} className="text-lg font-bold text-brand-dark bg-gray-50 px-4 py-3 rounded-xl hover:bg-brand-pink hover:text-white transition-colors">Холбоо барих</a>
+                <div className="flex flex-col bg-gray-50/50 rounded-2xl p-2 gap-1 mb-6 border border-gray-100">
+                  <a href="/" onClick={() => setIsMenuOpen(false)} className="text-base font-bold text-gray-700 px-4 py-3 rounded-xl hover:bg-white hover:text-brand-dark hover:shadow-sm transition-all focus:bg-white">Нүүр</a>
+                  <a href="#about" onClick={() => setIsMenuOpen(false)} className="text-base font-bold text-gray-700 px-4 py-3 rounded-xl hover:bg-white hover:text-brand-dark hover:shadow-sm transition-all focus:bg-white">Тухай</a>
+                  <a href="#participants" onClick={() => setIsMenuOpen(false)} className="text-base font-bold text-gray-700 px-4 py-3 rounded-xl hover:bg-white hover:text-brand-dark hover:shadow-sm transition-all focus:bg-white">Оролцогчид</a>
+                  <a href="#footer" onClick={() => setIsMenuOpen(false)} className="text-base font-bold text-gray-700 px-4 py-3 rounded-xl hover:bg-white hover:text-brand-dark hover:shadow-sm transition-all focus:bg-white">Холбоо барих</a>
                 </div>
 
-                <div className="mt-auto">
+                <div>
                   <button
                     onClick={() => {
                       setIsMenuOpen(false);
                       setIsModalOpen(true);
                     }}
-                    className="w-full bg-brand-blue text-white py-4 rounded-2xl font-black text-xl shadow-lg shadow-brand-blue/20"
+                    className="w-full bg-brand-blue text-white py-3.5 rounded-xl font-bold text-base shadow-md hover:shadow-brand-blue/30 active:scale-95 transition-all"
                   >
                     Бүртгүүлэх
                   </button>
@@ -994,91 +994,110 @@ export default function App() {
       </section>
 
       {/* Footer */}
-      <footer id="footer" className="bg-brand-dark pt-20 pb-10 border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8 mb-16">
-            <div className="lg:col-span-2">
-              <div className="flex items-center gap-2 mb-6 pt-6 border-t border-white/10">
-                <img src="https://kidsexpo.mn/wp-content/uploads/2026/03/untitled-1.png?w=1024" alt="Kids Expo 2026" className="h-14 object-contain rounded-md bg-white p-2" />
+      <footer id="footer" className="bg-brand-dark pt-32 pb-10 relative overflow-hidden">
+        {/* Background shapes */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-brand-pink/5 rounded-full blur-[100px] -z-10" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-brand-blue/5 rounded-full blur-[100px] -z-10" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-16">
+            
+            {/* Split Left Side */}
+            <div>
+              <div className="flex items-center gap-2 mb-8 pt-2">
+                <img src="https://kidsexpo.mn/wp-content/uploads/2026/03/untitled-1.png?w=1024" alt="Kids Expo 2026" className="h-16 object-contain rounded-md bg-white p-2" />
               </div>
-              <p className="text-white/60 font-medium max-w-md text-lg leading-relaxed">
+              <p className="text-white/60 font-medium max-w-md text-lg leading-relaxed mb-10">
                 Play • Create • Discover Fun • Together. Хүүхдийн инээд хөөрөөр
                 дүүрэн өдрүүдийг хамтдаа бүтээцгээе.
               </p>
+              
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
+                <div>
+                  <h4 className="font-bold text-white text-xl mb-6">
+                    Холбоо барих
+                  </h4>
+                  <ul className="space-y-4 text-white/70 font-medium">
+                    <li className="flex items-start justify-start gap-3">
+                      <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0 mt-0.5">
+                        <MapPin className="w-5 h-5 text-brand-yellow" />
+                      </div>
+                      <span className="flex-1 leading-relaxed">Төв цэнгэлдэх хүрээлэн, Сурын талбай, Шагайн асар</span>
+                    </li>
+                    <li className="flex items-center justify-start gap-3">
+                      <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                        <CalendarDays className="w-5 h-5 text-brand-green" />
+                      </div>
+                      <span>2026.05.29 - 06.01</span>
+                    </li>
+                    <li className="flex items-center justify-start gap-3">
+                      <a
+                        href="tel:91919442"
+                        className="flex items-center gap-3 hover:text-brand-pink transition-colors"
+                      >
+                        <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                          <Phone className="w-5 h-5 text-brand-blue" />
+                        </div>
+                        91919442, 88596771
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                
+                <div>
+                  <h4 className="font-bold text-white text-xl mb-6 opacity-0 hidden sm:block">
+                    Мэдээлэл
+                  </h4>
+                  <ul className="space-y-4 text-white/70 font-medium">
+                    <li>
+                      <a
+                        href="mailto:info@ubexpo.mn"
+                        className="flex items-center gap-3 hover:text-brand-pink transition-colors"
+                      >
+                        <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                          <Mail className="w-5 h-5 text-brand-pink" />
+                        </div>
+                        info@ubexpo.mn
+                      </a>
+                    </li>
+                    <li>
+                      <a
+                        href="https://www.facebook.com/kidsexpomn"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex items-center gap-3 hover:text-brand-pink transition-colors"
+                      >
+                        <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                          <Facebook className="w-5 h-5 text-[#1877F2]" />
+                        </div>
+                        Kids Expo Facebook
+                      </a>
+                    </li>
+                    <li className="pt-2">
+                      <a
+                        href="https://www.facebook.com/events/963560256069073"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex items-center gap-2 bg-brand-yellow hover:bg-white text-brand-dark px-6 py-3 rounded-full font-bold transition-all shadow-lg hover:shadow-yellow-400/20"
+                      >
+                        <Star className="w-5 h-5 fill-current" />
+                        Event Join
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
             </div>
 
-            <div>
-              <h4 className="font-bold text-white text-xl mb-6">
-                Холбоо барих
-              </h4>
-              <ul className="space-y-4 text-white/70 font-medium">
-                <li className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
-                    <MapPin className="w-5 h-5 text-brand-yellow" />
-                  </div>
-                  <span>Төв цэнгэлдэх хүрээлэн, Сурын талбай, Шагайн асар</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
-                    <CalendarDays className="w-5 h-5 text-brand-green" />
-                  </div>
-                  2026.05.29 - 06.01
-                </li>
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="font-bold text-white text-xl mb-6 opacity-0 hidden lg:block">
-                Мэдээлэл
-              </h4>
-              <ul className="space-y-4 text-white/70 font-medium">
-                <li>
-                  <a
-                    href="tel:91919442"
-                    className="flex items-center gap-3 hover:text-brand-pink transition-colors"
-                  >
-                    <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
-                      <Phone className="w-5 h-5 text-brand-blue" />
-                    </div>
-                    91919442, 88596771
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="mailto:info@ubexpo.mn"
-                    className="flex items-center gap-3 hover:text-brand-pink transition-colors"
-                  >
-                    <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
-                      <Mail className="w-5 h-5 text-brand-pink" />
-                    </div>
-                    info@ubexpo.mn
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://www.facebook.com/kidsexpomn"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="flex items-center gap-3 hover:text-brand-pink transition-colors"
-                  >
-                    <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center shrink-0">
-                      <Facebook className="w-5 h-5 text-[#1877F2]" />
-                    </div>
-                    Kids Expo Facebook
-                  </a>
-                </li>
-                <li className="pt-2">
-                  <a
-                    href="https://www.facebook.com/events/963560256069073"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-2 bg-brand-yellow hover:bg-white text-brand-dark px-6 py-3 rounded-full font-bold transition-all shadow-lg hover:shadow-yellow-400/20"
-                  >
-                    <Star className="w-5 h-5 fill-current" />
-                    Event Join
-                  </a>
-                </li>
-              </ul>
+            {/* Map Half */}
+            <div className="w-full h-80 lg:h-full lg:min-h-[400px] rounded-3xl overflow-hidden shadow-2xl relative bg-white/5 border border-white/10">
+              <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3172.908895790595!2d106.9114753767128!3d47.900466267638215!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5d9693b600b863e5%3A0x982f03035cba9b68!2sArchery%20Field!5e1!3m2!1sen!2smn!4v1779241659573!5m2!1sen!2smn" 
+                className="absolute inset-0 w-full h-full border-0 grayscale hover:grayscale-0 transition-duration-500 transition-all ease-in-out" 
+                allowFullScreen={true} 
+                loading="lazy" 
+                referrerPolicy="no-referrer-when-downgrade"
+              ></iframe>
             </div>
           </div>
 
