@@ -24,9 +24,11 @@ import {
   X,
   Loader2,
   Menu,
+  Lock,
 } from "lucide-react";
 import confetti from "canvas-confetti";
 import { db, collection, addDoc, serverTimestamp, OperationType, handleFirestoreError, testConnection } from "./lib/firebase";
+import AdminPanel from "./components/AdminPanel";
 
 const participants = [
   "Friut house",
@@ -124,6 +126,23 @@ export default function App() {
     type: "visitor",
     message: "",
   });
+
+  const [isAdminView, setIsAdminView] = useState(false);
+
+  useEffect(() => {
+    // Basic routing via URL params
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('admin') === 'true') {
+      setIsAdminView(true);
+    }
+  }, []);
+
+  if (isAdminView) {
+    return <AdminPanel onBack={() => {
+      setIsAdminView(false);
+      window.history.pushState({}, '', window.location.pathname);
+    }} />;
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -1118,8 +1137,17 @@ export default function App() {
             </div>
           </div>
 
-          <div className="border-t border-white/10 pt-8 text-center text-white/40 font-medium">
+          <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-white/40 font-medium">
             <p>&copy; 2026 KIDS EXPO. Зохиогчийн эрх хуулиар хамгаалагдсан.</p>
+            <div className="flex items-center gap-6">
+              <button 
+                onClick={() => setIsAdminView(true)}
+                className="p-2 text-white/5 hover:text-white/20 transition-colors rounded-lg"
+                title="Admin"
+              >
+                <Lock className="w-4 h-4" />
+              </button>
+            </div>
           </div>
         </div>
       </footer>
