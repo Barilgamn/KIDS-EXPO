@@ -191,18 +191,18 @@ export default function App() {
   }, []);
 
   const balloonColors = [
-    "bg-[#FF6B6B] text-white border-[#FF5252]", // Red
-    "bg-[#4ECDC4] text-white border-[#45B7AF]", // Teal
-    "bg-[#FFD93D] text-[#8B7500] border-[#FFC107]", // Yellow
-    "bg-[#6C5CE7] text-white border-[#5849BE]", // Purple
-    "bg-[#A8E6CF] text-[#2D5A47] border-[#8CD8B8]", // Mint
-    "bg-[#FF8B94] text-white border-[#FF707A]", // Pink
-    "bg-[#96CEB4] text-white border-[#7FB99C]", // Sage
-    "bg-[#FFEEAD] text-[#918151] border-[#EBD68D]", // Cream
-    "bg-[#D4A5A5] text-white border-[#C28C8C]", // Dusty Rose
-    "bg-[#A29BFE] text-white border-[#817AE3]", // Lavender
-    "bg-[#F9A826] text-white border-[#E69312]", // Orange
-    "bg-[#00B894] text-white border-[#00A383]", // Green
+    { bg: "bg-[#FF6B6B]", text: "text-white" }, // Red
+    { bg: "bg-[#4ECDC4]", text: "text-white" }, // Teal
+    { bg: "bg-[#FFD93D]", text: "text-[#8B7500]" }, // Yellow
+    { bg: "bg-[#6C5CE7]", text: "text-white" }, // Purple
+    { bg: "bg-[#A8E6CF]", text: "text-[#2D5A47]" }, // Mint
+    { bg: "bg-[#FF8B94]", text: "text-white" }, // Pink
+    { bg: "bg-[#96CEB4]", text: "text-white" }, // Sage
+    { bg: "bg-[#FFEEAD]", text: "text-[#918151]" }, // Cream
+    { bg: "bg-[#D4A5A5]", text: "text-white" }, // Dusty Rose
+    { bg: "bg-[#A29BFE]", text: "text-white" }, // Lavender
+    { bg: "bg-[#F9A826]", text: "text-white" }, // Orange
+    { bg: "bg-[#00B894]", text: "text-white" }, // Green
   ];
 
   const fadeIn = {
@@ -941,41 +941,58 @@ export default function App() {
           
           <div className="flex flex-wrap justify-center gap-2 md:gap-6">
             {shuffledParticipants.map((name, index) => {
-              const colorClass = balloonColors[index % balloonColors.length];
+              const color = balloonColors[index % balloonColors.length];
               
               return (
                 <motion.div
                   key={index}
-                  initial={{ opacity: 0, scale: 0.8, y: 0 }}
-                  whileInView={{ 
-                    opacity: 0.6, 
-                    scale: 1,
-                    y: [0, -10, 0]
-                  }}
-                  viewport={{ once: true }}
+                  initial={{ opacity: 0, y: 300, scale: 0.5 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  viewport={{ once: true, margin: "100px" }}
                   transition={{ 
-                    opacity: { duration: 0.5, delay: (index % 10) * 0.05 },
-                    scale: { duration: 0.5, delay: (index % 10) * 0.05 },
-                    y: {
-                      duration: 2 + Math.random() * 2,
+                    duration: 1.5, type: "spring", bounce: 0.4, 
+                    delay: Math.random() * 0.4 + (index % 5) * 0.1 
+                  }}
+                  className="flex-shrink-0 m-2 mt-4"
+                >
+                  {/* Container for infinite bobbing */}
+                  <motion.div
+                    animate={{ y: [0, -15, 0] }}
+                    transition={{
+                      duration: 3 + Math.random() * 2,
                       repeat: Infinity,
                       ease: "easeInOut",
                       delay: Math.random() * 2
-                    }
-                  }}
-                  whileHover={{ 
-                    opacity: 1, 
-                    scale: 1.1, 
-                    y: -15,
-                    rotate: [-1, 1, -1],
-                    transition: { duration: 0.2, y: { duration: 0.2 } }
-                  }}
-                  className={`p-2 sm:p-4 rounded-full aspect-square shadow-lg font-bold text-center text-xs md:text-sm cursor-default ${colorClass} transition-all duration-300 hover:shadow-xl border-b-4 m-2 relative overflow-hidden flex items-center justify-center flex-shrink-0`}
-                  style={{ width: "clamp(120px, 15vw, 180px)" }}
-                >
-                  {/* Subtle balloon shine effect */}
-                  <div className="absolute top-2 left-3 md:top-3 md:left-5 w-4 md:w-6 h-2 md:h-3 bg-white/40 rounded-full blur-[2px] transform -rotate-12"></div>
-                  <span className="break-words inline-block relative z-10 w-full px-2 max-h-full overflow-hidden leading-tight">{name}</span>
+                    }}
+                    whileHover={{ 
+                      scale: 1.05, 
+                      y: -20,
+                      rotate: [-2, 2, -2],
+                      transition: { duration: 0.3 }
+                    }}
+                    className={`font-bold text-center text-[10px] sm:text-xs md:text-sm cursor-default transition-all duration-300 hover:shadow-[0_15px_30px_rgba(0,0,0,0.15)] relative flex items-center justify-center p-2 sm:p-4 shadow-[inset_-5px_-5px_15px_rgba(0,0,0,0.1),_inset_5px_5px_15px_rgba(255,255,255,0.4),_0_10px_20px_rgba(0,0,0,0.1)] ${color.bg} ${color.text}`}
+                    style={{ 
+                      width: "clamp(100px, 15vw, 150px)", 
+                      aspectRatio: "1 / 1.15",
+                      borderRadius: "50% 50% 50% 50% / 40% 40% 60% 60%" 
+                    }}
+                  >
+                    {/* Subtle balloon shine effect */}
+                    <div className="absolute top-2 sm:top-3 left-3 sm:left-4 w-[15%] h-[10%] bg-white/60 rounded-full blur-[2px] transform -rotate-[40deg]"></div>
+                    
+                    {/* Text Content */}
+                    <span 
+                      className="break-words inline-block relative z-10 w-full px-2 max-h-full overflow-hidden leading-tight text-shadow-sm" 
+                      style={color.text.includes('white') ? { textShadow: '1px 1px 2px rgba(0,0,0,0.2)' } : { textShadow: '1px 1px 2px rgba(255,255,255,0.4)' }}
+                    >
+                      {name}
+                    </span>
+
+                    {/* Balloon Knot */}
+                    <div className={`absolute -bottom-2 sm:-bottom-3 left-1/2 -translate-x-1/2 w-4 h-3 sm:w-5 sm:h-4 ${color.bg} rounded-full`} style={{ borderBottom: "2px solid rgba(0,0,0,0.15)" }}></div>
+                    {/* Balloon String */}
+                    <div className="absolute -bottom-16 sm:-bottom-20 left-1/2 -translate-x-1/2 w-[1px] h-14 sm:h-16 bg-gray-300 opacity-60 z-[-1] origin-top transform rotate-1"></div>
+                  </motion.div>
                 </motion.div>
               );
             })}
