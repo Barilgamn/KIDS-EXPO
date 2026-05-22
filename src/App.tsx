@@ -970,11 +970,12 @@ export default function App() {
                     rotate: [-1, 1, -1],
                     transition: { duration: 0.2, y: { duration: 0.2 } }
                   }}
-                  className={`px-3 py-2 md:px-6 md:py-4 rounded-[1rem] md:rounded-[2rem] shadow-md md:shadow-lg font-bold text-center text-[10px] sm:text-xs md:text-base cursor-default ${colorClass} transition-all duration-300 hover:shadow-xl border-b-2 md:border-b-4 flex-1 min-w-[80px] sm:min-w-[120px] md:max-w-xs relative overflow-hidden flex items-center justify-center min-h-[40px] md:min-h-[60px]`}
+                  className={`p-2 sm:p-4 rounded-full aspect-square shadow-lg font-bold text-center text-xs md:text-sm cursor-default ${colorClass} transition-all duration-300 hover:shadow-xl border-b-4 m-2 relative overflow-hidden flex items-center justify-center flex-shrink-0`}
+                  style={{ width: "clamp(120px, 15vw, 180px)" }}
                 >
                   {/* Subtle balloon shine effect */}
-                  <div className="absolute top-0.5 left-1.5 md:top-1 md:left-3 w-2 md:w-4 h-1 md:h-2 bg-white/30 rounded-full blur-[1px]"></div>
-                  <span className="break-words line-clamp-2 relative z-10">{name}</span>
+                  <div className="absolute top-2 left-3 md:top-3 md:left-5 w-4 md:w-6 h-2 md:h-3 bg-white/40 rounded-full blur-[2px] transform -rotate-12"></div>
+                  <span className="break-words inline-block relative z-10 w-full px-2 max-h-full overflow-hidden leading-tight">{name}</span>
                 </motion.div>
               );
             })}
