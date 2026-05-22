@@ -788,7 +788,7 @@ export default function App() {
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
                 >
-                  <img src="https://i0.wp.com/kidsexpo.mn/wp-content/uploads/2026/03/640063600_26282930277986842_2933560464071824266_n-1.png?w=1809&ssl=1" alt="UB EXPO ICC" className="h-32 md:h-48 object-contain" />
+                  <img loading="lazy" src="https://i0.wp.com/kidsexpo.mn/wp-content/uploads/2026/03/640063600_26282930277986842_2933560464071824266_n-1.png?w=1809&ssl=1" alt="UB EXPO ICC" className="h-32 md:h-48 object-contain" />
                   <span className="font-bold text-xs text-gray-500 leading-snug mt-6 uppercase tracking-wider text-center">
                     UB EXPO ICC
                   </span>
@@ -810,7 +810,7 @@ export default function App() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0 }}
                 >
-                  <img src="https://i0.wp.com/kidsexpo.mn/wp-content/uploads/2026/03/%D0%9C%D0%BE%D0%BD%D0%B3%D0%BE%D0%BB-%D0%A3%D0%BB%D1%81%D1%8B%D0%BD-%D0%97%D0%B0%D1%81%D0%B3%D0%B8%D0%B9%D0%BD-%D0%93%D0%B0%D0%B7%D0%B0%D1%80-1.jpg?w=1180&ssl=1" alt="Соёл, спорт, аялал жуулчлал, залуучуудын яам" className="h-32 md:h-48 object-contain" />
+                  <img loading="lazy" src="https://i0.wp.com/kidsexpo.mn/wp-content/uploads/2026/03/%D0%9C%D0%BE%D0%BD%D0%B3%D0%BE%D0%BB-%D0%A3%D0%BB%D1%81%D1%8B%D0%BD-%D0%97%D0%B0%D1%81%D0%B3%D0%B8%D0%B9%D0%BD-%D0%93%D0%B0%D0%B7%D0%B0%D1%80-1.jpg?w=1180&ssl=1" alt="Соёл, спорт, аялал жуулчлал, залуучуудын яам" className="h-32 md:h-48 object-contain" />
                   <span className="font-bold text-xs text-gray-500 leading-snug mt-6 uppercase tracking-wider text-center">
                     Соёл, спорт, аялал жуулчлал, залуучуудын яам
                   </span>
@@ -825,7 +825,7 @@ export default function App() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2 }}
                 >
-                  <img src="https://i0.wp.com/kidsexpo.mn/wp-content/uploads/2026/03/%D0%9C%D2%AE%D0%A5%D0%90%D2%AE%D0%A2.png?w=847&ssl=1" alt="Монголын Үндэсний Худалдаа Аж Үйлдвэрийн Танхим" className="h-24 md:h-32 object-contain" />
+                  <img loading="lazy" src="https://i0.wp.com/kidsexpo.mn/wp-content/uploads/2026/03/%D0%9C%D2%AE%D0%A5%D0%90%D2%AE%D0%A2.png?w=847&ssl=1" alt="Монголын Үндэсний Худалдаа Аж Үйлдвэрийн Танхим" className="h-24 md:h-32 object-contain" />
                   <span className="font-bold text-xs text-gray-500 leading-snug mt-6 uppercase tracking-wider text-center">
                     Монголын Үндэсний Худалдаа Аж Үйлдвэрийн Танхим
                   </span>
@@ -840,7 +840,7 @@ export default function App() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.4 }}
                 >
-                  <img src="https://i0.wp.com/kidsexpo.mn/wp-content/uploads/2026/03/%D0%A3%D0%91%D0%A1%D2%AF%D0%BB%D0%B4_%D2%AE%D0%BD%D0%B4%D1%81%D1%8D%D0%BD-%D1%85%D1%83%D0%B2%D0%B8%D0%BB%D0%B1%D0%B0%D1%80_RGB.png?w=1182&ssl=1" alt="Нийслэлийн Соёл, урлагийн газар" className="h-32 md:h-48 object-contain" />
+                  <img loading="lazy" src="https://i0.wp.com/kidsexpo.mn/wp-content/uploads/2026/03/%D0%A3%D0%91%D0%A1%D2%AF%D0%BB%D0%B4_%D2%AE%D0%BD%D0%B4%D1%81%D1%8D%D0%BD-%D1%85%D1%83%D0%B2%D0%B8%D0%BB%D0%B1%D0%B0%D1%80_RGB.png?w=1182&ssl=1" alt="Нийслэлийн Соёл, урлагийн газар" className="h-32 md:h-48 object-contain" />
                   <span className="font-bold text-xs text-gray-500 leading-snug mt-6 uppercase tracking-wider text-center">
                     Нийслэлийн Соёл, Урлагийн Газар
                   </span>
@@ -860,7 +860,7 @@ export default function App() {
                   className="bg-white p-10 rounded-[2.5rem] shadow-xl border-4 border-brand-yellow/30 flex flex-col items-center justify-center w-full md:w-[320px] aspect-square md:aspect-auto md:h-64"
                   whileHover={{ scale: 1.05 }}
                 >
-                  <img src="https://i0.wp.com/kidsexpo.mn/wp-content/uploads/2026/03/Untitled-1.png?w=1262&ssl=1" alt="ONDO Brand" className="h-24 md:h-28 object-contain" />
+                  <img loading="lazy" src="https://i0.wp.com/kidsexpo.mn/wp-content/uploads/2026/03/Untitled-1.png?w=1262&ssl=1" alt="ONDO Brand" className="h-24 md:h-28 object-contain" />
                   <span className="text-sm font-black text-gray-400 mt-6 tracking-widest uppercase">
                     ONDO Brand
                   </span>
@@ -872,7 +872,7 @@ export default function App() {
                   className="bg-white p-10 rounded-[2.5rem] shadow-xl border-4 border-brand-blue/30 flex flex-col items-center justify-center w-full md:w-[320px] aspect-square md:aspect-auto md:h-64"
                   whileHover={{ scale: 1.05 }}
                 >
-                  <img src="https://i0.wp.com/kidsexpo.mn/wp-content/uploads/2026/03/hewtee-logo.png?w=4000&ssl=1" alt="Cressenn" className="h-24 md:h-28 object-contain" />
+                  <img loading="lazy" src="https://i0.wp.com/kidsexpo.mn/wp-content/uploads/2026/03/hewtee-logo.png?w=4000&ssl=1" alt="Cressenn" className="h-24 md:h-28 object-contain" />
                   <span className="text-sm font-black text-gray-400 mt-6 tracking-widest uppercase">
                     Cressenn
                   </span>
@@ -892,7 +892,7 @@ export default function App() {
                     rel="noopener noreferrer"
                     className="bg-white p-6 rounded-[2rem] shadow-lg border border-gray-100 flex flex-col items-center justify-center min-w-[200px] hover:shadow-xl transition-shadow w-56 aspect-[3/2]"
                   >
-                    <img src="https://i0.wp.com/kidsexpo.mn/wp-content/uploads/2026/03/Naran-kids-1.png?w=1473&ssl=1" alt="Naran Kids" className="w-full h-full object-contain" />
+                    <img loading="lazy" src="https://i0.wp.com/kidsexpo.mn/wp-content/uploads/2026/03/Naran-kids-1.png?w=1473&ssl=1" alt="Naran Kids" className="w-full h-full object-contain" />
                     <span className="text-xs font-black text-gray-400 mt-4 tracking-widest uppercase text-center">NARAN KIDS</span>
                   </a>
                   <a
@@ -901,7 +901,7 @@ export default function App() {
                     rel="noopener noreferrer"
                     className="bg-white p-6 rounded-[2rem] shadow-lg border border-gray-100 flex flex-col items-center justify-center min-w-[200px] hover:shadow-xl transition-shadow w-56 aspect-[3/2]"
                   >
-                    <img src="https://i0.wp.com/kidsexpo.mn/wp-content/uploads/2026/03/ovs-logo-huh-1.png?w=1552&ssl=1" alt="OVS Kids" className="w-full h-full object-contain" />
+                    <img loading="lazy" src="https://i0.wp.com/kidsexpo.mn/wp-content/uploads/2026/03/ovs-logo-huh-1.png?w=1552&ssl=1" alt="OVS Kids" className="w-full h-full object-contain" />
                     <span className="text-xs font-black text-gray-400 mt-4 tracking-widest uppercase text-center">OVS KIDS</span>
                   </a>
                 </div>
@@ -917,7 +917,7 @@ export default function App() {
                     rel="noopener noreferrer"
                     className="bg-white p-6 rounded-[2rem] shadow-lg border border-gray-100 flex flex-col items-center justify-center min-w-[200px] hover:shadow-xl transition-shadow w-56 aspect-[3/2]"
                   >
-                    <img src="https://i0.wp.com/kidsexpo.mn/wp-content/uploads/2026/03/PocketSafe-%D1%83%D1%80%D1%82-%D3%A9%D0%BD%D0%B3%D3%A9%D1%82-%D0%BB%D0%BE%D0%B3%D0%BE-1.png?w=2786&ssl=1" alt="Pocket App" className="w-full h-full object-contain" />
+                    <img loading="lazy" src="https://i0.wp.com/kidsexpo.mn/wp-content/uploads/2026/03/PocketSafe-%D1%83%D1%80%D1%82-%D3%A9%D0%BD%D0%B3%D3%A9%D1%82-%D0%BB%D0%BE%D0%B3%D0%BE-1.png?w=2786&ssl=1" alt="Pocket App" className="w-full h-full object-contain" />
                     <span className="text-xs font-black text-gray-400 mt-4 tracking-widest uppercase text-center">POCKET</span>
                   </a>
                 </div>
@@ -990,6 +990,7 @@ export default function App() {
 
         {/* Character Peeks */}
         <motion.img
+          loading="lazy"
           src="https://i0.wp.com/kidsexpo.mn/wp-content/uploads/2026/03/Character-03-1.png?w=2003&ssl=1"
           alt="Star Peek"
           className="absolute -bottom-10 left-[5%] w-32 md:w-48 h-auto z-10 opacity-90 transform -rotate-12"
@@ -997,6 +998,7 @@ export default function App() {
           transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
         />
         <motion.img
+          loading="lazy"
           src="https://i0.wp.com/kidsexpo.mn/wp-content/uploads/2026/03/Character-04-1.png?w=1923&ssl=1"
           alt="Green Ball Peek"
           className="absolute -top-10 right-[5%] w-32 md:w-40 h-auto z-10 opacity-90 transform rotate-12"

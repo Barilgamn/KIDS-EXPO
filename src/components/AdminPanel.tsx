@@ -19,6 +19,7 @@ import {
   Trash2, 
   LogOut, 
   ArrowLeft,
+  ArrowUp,
   Calendar,
   Phone,
   Mail,
@@ -99,7 +100,7 @@ export default function AdminPanel({ onBack }: { onBack: () => void }) {
 
   const handleLogout = async () => {
     try {
-      await auth.signOut();
+      await signOut(auth);
     } catch (err) {
       console.error("Logout failed:", err);
     }
@@ -112,7 +113,7 @@ export default function AdminPanel({ onBack }: { onBack: () => void }) {
       r.email,
       r.phone,
       r.type,
-      `"${r.message.replace(/"/g, '""')}"`,
+      `"${(r.message || '').replace(/"/g, '""')}"`,
       r.createdAt?.toDate?.()?.toLocaleString() || ''
     ]);
     
@@ -130,9 +131,9 @@ export default function AdminPanel({ onBack }: { onBack: () => void }) {
   };
 
   const filteredRegistrations = registrations.filter(r => 
-    r.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    r.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    r.phone.includes(searchTerm)
+    (r.name?.toLowerCase().includes(searchTerm.toLowerCase()) || false) ||
+    (r.email?.toLowerCase().includes(searchTerm.toLowerCase()) || false) ||
+    (r.phone?.includes(searchTerm) || false)
   );
 
   if (loading && !user) {
@@ -326,10 +327,10 @@ export default function AdminPanel({ onBack }: { onBack: () => void }) {
                         <td className="py-5 px-4">
                           <div className="flex items-center gap-3">
                             <div className={`w-10 h-10 rounded-xl flex items-center justify-center font-black text-white ${reg.type === 'exhibitor' ? 'bg-brand-pink' : 'bg-brand-blue'}`}>
-                              {reg.name.substring(0, 1).toUpperCase()}
+                              {reg.name?.substring(0, 1).toUpperCase() || '?'}
                             </div>
                             <div>
-                              <p className="font-bold text-brand-dark leading-none mb-1">{reg.name}</p>
+                              <p className="font-bold text-brand-dark leading-none mb-1">{reg.name || 'Нэргүй'}</p>
                               <div className="flex items-center gap-1.5 text-[10px] text-gray-400 font-bold uppercase">
                                 <Calendar className="w-3 h-3" />
                                 {reg.createdAt?.toDate?.()?.toLocaleDateString() || 'Recently'}
@@ -340,10 +341,10 @@ export default function AdminPanel({ onBack }: { onBack: () => void }) {
                           {/* Mobile compact info */}
                           <div className="mt-2 sm:hidden space-y-1">
                              <div className="flex items-center gap-2 text-xs text-gray-500">
-                               <Phone className="w-3 h-3" /> {reg.phone}
+                               <Phone className="w-3 h-3" /> {reg.phone || 'Мэдээлэлгүй'}
                              </div>
                              <div className="flex items-center gap-2 text-xs text-gray-500 overflow-hidden text-ellipsis">
-                               <Mail className="w-3 h-3" /> {reg.email}
+                               <Mail className="w-3 h-3" /> {reg.email || 'Мэдээлэлгүй'}
                              </div>
                           </div>
                         </td>
