@@ -129,6 +129,38 @@ export default function App() {
 
   const [isAdminView, setIsAdminView] = useState(false);
 
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
+  });
+
+  useEffect(() => {
+    const targetDate = new Date("2026-05-29T09:00:00").getTime();
+    
+    const calculateTimeLeft = () => {
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+          seconds: Math.floor((difference % (1000 * 60)) / 1000),
+        });
+      } else {
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      }
+    };
+
+    calculateTimeLeft();
+    const intervalId = setInterval(calculateTimeLeft, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
   useEffect(() => {
     // Basic routing via URL params
     const params = new URLSearchParams(window.location.search);
@@ -371,6 +403,74 @@ export default function App() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
+            className="flex flex-col items-center mb-8 mt-10 md:mt-0"
+          >
+            <h3 className="text-xl md:text-3xl font-black text-brand-dark mb-6 tracking-wide drop-shadow-sm uppercase opacity-90 inline-block px-4 py-2 rounded-2xl bg-white/50 backdrop-blur-sm border border-white">
+              KIDS EXPO Үзэсгэлэн эхлэхэд
+            </h3>
+            
+            <div className="flex flex-wrap justify-center gap-4 sm:gap-6 md:gap-8 mb-6 mt-4">
+              {[
+                { label: 'Өдөр', value: timeLeft.days, ...balloonColors[0] }, // Red
+                { label: 'Цаг', value: timeLeft.hours, ...balloonColors[2] }, // Yellow
+                { label: 'Минут', value: timeLeft.minutes, ...balloonColors[11] }, // Green
+                { label: 'Секунд', value: timeLeft.seconds, ...balloonColors[3] }, // Purple
+              ].map((item, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, y: 300, scale: 0.5 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ 
+                    duration: 1.5, type: "spring", bounce: 0.4, 
+                    delay: index * 0.15 
+                  }}
+                  className="flex-shrink-0"
+                >
+                  <motion.div
+                    animate={{ y: [0, -10, 0] }}
+                    transition={{
+                      duration: 3 + index * 0.5,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                      delay: Math.random()
+                    }}
+                    className={`font-bold text-center relative flex flex-col items-center justify-center p-2 sm:p-4 shadow-[inset_-5px_-5px_15px_rgba(0,0,0,0.1),_inset_5px_5px_15px_rgba(255,255,255,0.4),_0_10px_20px_rgba(0,0,0,0.1)] ${item.bg} ${item.text}`}
+                    style={{ 
+                      width: "clamp(75px, 15vw, 110px)", 
+                      aspectRatio: "1 / 1.15",
+                      borderRadius: "50% 50% 50% 50% / 40% 40% 60% 60%" 
+                    }}
+                  >
+                    {/* Subtle balloon shine effect */}
+                    <div className="absolute top-2 sm:top-3 left-3 sm:left-4 w-[15%] h-[10%] bg-white/60 rounded-full blur-[2px] transform -rotate-[40deg]"></div>
+                    
+                    <span 
+                      className="break-words relative z-10 w-full px-2 leading-none text-3xl sm:text-4xl md:text-5xl text-shadow-sm font-black" 
+                      style={item.text.includes('white') ? { textShadow: '2px 2px 4px rgba(0,0,0,0.2)' } : { textShadow: '2px 2px 4px rgba(255,255,255,0.4)' }}
+                    >
+                      {String(item.value).padStart(2, '0')}
+                    </span>
+                    <span 
+                      className="mt-1 sm:mt-2 text-[10px] sm:text-xs md:text-sm uppercase tracking-wider relative z-10 font-bold opacity-90"
+                      style={item.text.includes('white') ? { textShadow: '1px 1px 2px rgba(0,0,0,0.2)' } : { textShadow: '1px 1px 2px rgba(255,255,255,0.4)' }}
+                    >
+                      {item.label}
+                    </span>
+
+                    {/* Balloon Knot */}
+                    <div className={`absolute -bottom-2 sm:-bottom-3 left-1/2 -translate-x-1/2 w-4 h-3 sm:w-5 sm:h-4 ${item.bg} rounded-full`} style={{ borderBottom: "2px solid rgba(0,0,0,0.15)" }}></div>
+                    {/* Balloon String */}
+                    <div className="absolute -bottom-16 sm:-bottom-20 left-1/2 -translate-x-1/2 w-[1px] h-14 sm:h-16 bg-gray-300 opacity-60 z-[-1] origin-top transform rotate-1"></div>
+                  </motion.div>
+                </motion.div>
+              ))}
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
           >
             <span className="inline-block py-1.5 px-4 rounded-full bg-brand-yellow text-brand-dark font-black text-sm tracking-widest uppercase mb-6 shadow-md transform -rotate-2">
               Нярай • Хүүхэд • Өсвөр үе
