@@ -128,6 +128,7 @@ export default function App() {
   });
 
   const [isAdminView, setIsAdminView] = useState(false);
+  const [activeDay, setActiveDay] = useState(0);
 
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -222,6 +223,60 @@ export default function App() {
     return [...participants].sort(() => Math.random() - 0.5);
   }, []);
 
+  const scheduleData = [
+    {
+      date: "05.29",
+      day: "БААСАН",
+      events: [
+        { time: "09:00", description: '"KIDS EXPO 2026" эх, үрсэд зориулсан үзэсгэлэн, худалдаа нээнэ' },
+        { time: "11:30", description: 'Хүндэт зочдыг угтах' },
+        { time: "11:40", description: 'Хэвлэл мэдээлэлийн цаг' },
+        { time: "12:00 - 12:05", description: 'Нээлтийн үйл ажиллагаа' },
+        { time: "12:30 - 12:35", description: 'Баярын тууз хайчлах ёслол' },
+        { time: "12:35 - 12:50", description: 'Урлагийн тоглолт ' },
+        { time: "12:50 - 13:05", description: 'Спонсорын талархал' },
+        { time: "13:05 - 13:25", description: 'Мөнх тунх - Маскот бүжгийн шоу' },
+        { time: "13:25 - 13:35", description: 'Үзэсгэлэн, яармагтай танилцах аялал' },
+        { time: "13:35", description: 'Хүндэт зочдын үдийн зоог' },
+        { time: "12:30 - 13:30", description: 'LIVE үзэсгэлэнд оролцогчдын шууд дамжуулалт' },
+        { time: "13:30 - 14:00", description: 'Хүүхэд, гэр бүлийн хөгжил, хамгааллын ерөнхий газар (108 Таны Дотны найз )' },
+        { time: "14:00 - 16:00", description: 'Оролцогч байгуулгуудын танилцуулга' },
+      ]
+    },
+    {
+      date: "05.30",
+      day: "БЯМБА",
+      events: [
+        { time: "10:00 - 11:00", description: 'Barilga mn болон Barilgachin group-ийн хүүхдүүдэд бэлэг гардуулах' },
+        { time: "12:00 - 12:20", description: 'Мөнх тунх маскот (POCKET )' },
+        { time: "12:30 - 13:30", description: 'KIDS GOT TALENT (Манайхаас)' },
+        { time: "13:30 - 14:30", description: 'Хөгжөөнт тоглоом (Шууд тайзан дээр )' },
+        { time: "14:00 - 14:30", description: 'Хүүхэд, гэр бүлийн хөгжил, хамгааллын ерөнхий газар (108 Таны Дотны найз )' },
+        { time: "14:30 - 16:30", description: 'Оролцогч байгуулгуудын танилцуулга' },
+      ]
+    },
+    {
+      date: "05.31",
+      day: "НЯМ",
+      events: [
+        { time: "12:00 - 14:00", description: '"Загварын шоу" Naran life style OVS brand (Мандухай)' },
+        { time: "14:00 - 14:30", description: 'Хүүхэд, гэр бүлийн хөгжил, хамгааллын ерөнхий газар (108 Таны Дотны найз )' },
+        { time: "15:00 - 17:00", description: 'Оролцогч байгуулгуудын танилцуулга' },
+      ]
+    },
+    {
+      date: "06.01",
+      day: "ДАВАА",
+      events: [
+        { time: "12:00 - 13:00", description: 'ENTERTAINMENT MN ЖҮЖИГ' },
+        { time: "13:00 - 13:30", description: 'Хүүхэд, гэр бүлийн хөгжил, хамгааллын ерөнхий газар (108 Таны Дотны найз )' },
+        { time: "13:30 - 13:45", description: '"Үлэг гүрвэл" Nigth train хамтлаг' },
+        { time: "14:45 - 15:15", description: 'HAPPY FAMILY CHALLENGE фото уралдаан шагнал гардуулалт' },
+        { time: "15:15 - 15:30", description: '"Үлэг гүрвэл" Nigth train хамтлаг' },
+      ]
+    }
+  ];
+
   const balloonColors = [
     { bg: "bg-[#FF6B6B]", text: "text-white" }, // Red
     { bg: "bg-[#4ECDC4]", text: "text-white" }, // Teal
@@ -264,11 +319,12 @@ export default function App() {
             </div>
             
             {/* Desktop Menu */}
-            <div className="hidden md:flex space-x-8 lg:space-x-10">
-              <a href="/" className="text-brand-dark hover:text-brand-pink font-extrabold text-lg transition-colors">Нүүр</a>
-              <a href="#about" className="text-brand-dark hover:text-brand-pink font-extrabold text-lg transition-colors">Тухай</a>
-              <a href="#participants" className="text-brand-dark hover:text-brand-pink font-extrabold text-lg transition-colors">Оролцогчид</a>
-              <a href="#footer" className="text-brand-dark hover:text-brand-pink font-extrabold text-lg transition-colors">Холбоо барих</a>
+            <div className="hidden md:flex space-x-6 lg:space-x-8">
+              <a href="/" className="text-brand-dark hover:text-brand-pink font-extrabold text-sm lg:text-base xl:text-lg transition-colors">Нүүр</a>
+              <a href="#about" className="text-brand-dark hover:text-brand-pink font-extrabold text-sm lg:text-base xl:text-lg transition-colors">Тухай</a>
+              <a href="#schedule" className="text-brand-dark hover:text-brand-pink font-extrabold text-sm lg:text-base xl:text-lg transition-colors">Хөтөлбөр</a>
+              <a href="#participants" className="text-brand-dark hover:text-brand-pink font-extrabold text-sm lg:text-base xl:text-lg transition-colors">Оролцогчид</a>
+              <a href="#footer" className="text-brand-dark hover:text-brand-pink font-extrabold text-sm lg:text-base xl:text-lg transition-colors">Холбоо барих</a>
             </div>
 
             {/* Desktop Button / Mobile Menu Toggle */}
@@ -323,6 +379,7 @@ export default function App() {
                 <div className="flex flex-col bg-gray-50/50 rounded-2xl p-2 gap-1 mb-6 border border-gray-100">
                   <a href="/" onClick={() => setIsMenuOpen(false)} className="text-base font-bold text-gray-700 px-4 py-3 rounded-xl hover:bg-white hover:text-brand-dark hover:shadow-sm transition-all focus:bg-white">Нүүр</a>
                   <a href="#about" onClick={() => setIsMenuOpen(false)} className="text-base font-bold text-gray-700 px-4 py-3 rounded-xl hover:bg-white hover:text-brand-dark hover:shadow-sm transition-all focus:bg-white">Тухай</a>
+                  <a href="#schedule" onClick={() => setIsMenuOpen(false)} className="text-base font-bold text-gray-700 px-4 py-3 rounded-xl hover:bg-white hover:text-brand-dark hover:shadow-sm transition-all focus:bg-white">Хөтөлбөр</a>
                   <a href="#participants" onClick={() => setIsMenuOpen(false)} className="text-base font-bold text-gray-700 px-4 py-3 rounded-xl hover:bg-white hover:text-brand-dark hover:shadow-sm transition-all focus:bg-white">Оролцогчид</a>
                   <a href="#footer" onClick={() => setIsMenuOpen(false)} className="text-base font-bold text-gray-700 px-4 py-3 rounded-xl hover:bg-white hover:text-brand-dark hover:shadow-sm transition-all focus:bg-white">Холбоо барих</a>
                 </div>
@@ -1023,6 +1080,76 @@ export default function App() {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Schedule Section */}
+      <section id="schedule" className="py-24 bg-gray-50 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03]" />
+        
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-12 lg:mb-16">
+            <h2 className="text-4xl md:text-5xl font-black mb-6 text-brand-dark tracking-tight">
+              Хөтөлбөр
+            </h2>
+            <div className="w-24 h-2 bg-brand-green mx-auto rounded-full mb-10" />
+            
+            {/* Tabs */}
+            <div className="flex flex-wrap justify-center gap-2 md:gap-4 mb-10">
+              {scheduleData.map((day, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setActiveDay(idx)}
+                  className={`px-6 py-3 md:px-8 md:py-4 rounded-2xl font-bold text-sm md:text-base lg:text-lg transition-all duration-300 border-b-4 ${
+                    activeDay === idx 
+                      ? 'bg-brand-dark text-white border-brand-dark scale-105 shadow-xl' 
+                      : 'bg-white text-gray-500 border-gray-200 hover:border-gray-300 hover:bg-gray-50 shadow-md'
+                  }`}
+                >
+                  <div className="opacity-60 text-xs md:text-sm mb-1">{day.date}</div>
+                  <div>{day.day}</div>
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Schedule Content */}
+          <div className="max-w-3xl mx-auto bg-white rounded-[2rem] p-6 md:p-8 lg:p-12 shadow-xl border border-gray-100">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeDay}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+                className="space-y-2 md:space-y-4"
+              >
+                {scheduleData[activeDay].events.map((event, idx) => {
+                  const colors = ['bg-[#FF6B6B]', 'bg-[#FFD93D]', 'bg-[#4ECDC4]', 'bg-[#96CEB4]', 'bg-[#6C5CE7]', 'bg-[#FF8B94]'];
+                  const bulletColor = colors[idx % colors.length];
+                  
+                  return (
+                    <div key={idx} className="flex gap-4 md:gap-6 items-start group">
+                      <div className="flex flex-col items-center pt-2">
+                        <div className={`w-3 h-3 md:w-4 md:h-4 rounded-full ${bulletColor} shadow-sm group-hover:scale-150 transition-transform duration-300`} />
+                        {idx !== scheduleData[activeDay].events.length - 1 && (
+                          <div className={`w-px h-full min-h-[2.5rem] mt-2 bg-gray-100 group-hover:bg-gray-200 transition-colors`} />
+                        )}
+                      </div>
+                      <div className="flex-1 pb-4 md:pb-6">
+                        <div className="inline-block px-3 py-1 bg-gray-100 text-gray-600 rounded-lg text-xs md:text-sm font-bold tracking-wider mb-2">
+                          {event.time}
+                        </div>
+                        <h3 className="text-sm sm:text-base md:text-lg font-bold text-brand-dark leading-snug">
+                          {event.description}
+                        </h3>
+                      </div>
+                    </div>
+                  );
+                })}
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
       </section>
