@@ -27,6 +27,7 @@ import {
   Lock,
 } from "lucide-react";
 import confetti from "canvas-confetti";
+import { Analytics } from "@vercel/analytics/react";
 import { db, collection, addDoc, serverTimestamp, OperationType, handleFirestoreError, testConnection } from "./lib/firebase";
 import AdminPanel from "./components/AdminPanel";
 
@@ -1585,6 +1586,7 @@ export default function App() {
           </div>
         )}
       </AnimatePresence>
+      <Analytics />
     </div>
   );
 }
